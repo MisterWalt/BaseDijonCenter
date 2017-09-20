@@ -20,7 +20,7 @@ import javax.net.ssl.HttpsURLConnection;
  * Created by Maxime on 08/09/2017.
  */
 
-public class PoiAdapter extends AsyncTask<URL, Void, ArrayList<PointOfInterest>>{
+public class LoadPoi extends AsyncTask<URL, Void, ArrayList<PointOfInterest>>{
 
     @Override
     protected ArrayList<PointOfInterest> doInBackground(URL... params) {

@@ -59,9 +59,12 @@ public class PointOfInterest {
                 this.setType(jsonReader.nextString());
             } else  if (key.equals("name")){
                 this.setName(jsonReader.nextString());
-            } else if(key.equals("location")){
+            } else if(key.equals("location")) {
                 this.location = new Location();
                 this.location.buildFromReader(jsonReader);
+            }else
+            {
+                jsonReader.hasNext();
             }
 
         }

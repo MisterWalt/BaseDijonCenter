@@ -1,25 +1,22 @@
 package com.example.maxime.basedijoncenter_mw;
 
-import android.os.AsyncTask;
+import android.app.FragmentTransaction;
+import android.support.v4.app.FragmentActivity;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.JsonReader;
-import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
-import com.example.maxime.basedijoncenter_mw.Adapters.PoiAdapter;
+import com.example.maxime.basedijoncenter_mw.Adapters.LoadPoi;
+import com.example.maxime.basedijoncenter_mw.Adapters.PoiListAdapter;
 import com.example.maxime.basedijoncenter_mw.Models.PointOfInterest;
+import com.google.android.gms.maps.MapFragment;
 
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
+
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.ArrayList;
 
-import javax.net.ssl.HttpsURLConnection;
-
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends FragmentActivity {
 
     public ArrayList<PointOfInterest> listPoi;
     private ListView listview;
@@ -31,6 +28,7 @@ public class MainActivity extends AppCompatActivity {
 
 
         this.listview = (ListView) findViewById(R.id.lstPoi);
+
         URL url = null;
         try {
             url = new URL("https://my-json-server.typicode.com/lpotherat/pois/pois/");
@@ -38,7 +36,7 @@ public class MainActivity extends AppCompatActivity {
             e.printStackTrace();
         }
 
-        new PoiAdapter(){
+        new LoadPoi(){
             @Override
             protected void onPreExecute() {
                 super.onPreExecute();
@@ -48,8 +46,21 @@ public class MainActivity extends AppCompatActivity {
                 super.onPostExecute(pointOfInterests);
 
                 if (pointOfInterests != null) {
-                    ArrayAdapter adapter = new ArrayAdapter<PointOfInterest>(MainActivity.this, android.R.layout.simple_list_item_1, pointOfInterests);
+
+
+                    PoiListAdapter adapter = new PoiListAdapter( MainActivity.this, pointOfInterests);
                     listview.setAdapter(adapter);
+
+
+
+                    //MapFragment mMapFragment = MapFragment.newInstance();
+                    //FragmentTransaction fragmentTransaction =
+                    //        getFragmentManager().beginTransaction();
+                    //fragmentTransaction.add(R.id.map, mMapFragment);
+                    //fragmentTransaction.commit();
+
+
+
                 }
 
             }
@@ -58,4 +69,8 @@ public class MainActivity extends AppCompatActivity {
 
 
     }
+
+
+
+
 }
